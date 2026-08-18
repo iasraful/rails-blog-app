@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = @post.comments.build
   end
 
   # GET /posts/new
@@ -24,6 +25,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = Current.user
 
     respond_to do |format|
       if @post.save
@@ -67,6 +69,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :content, :user_id ])
+      params.expect(post: [ :title, :content ])
     end
 end
