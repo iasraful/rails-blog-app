@@ -87,18 +87,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: blog_app_production
-    username: blog_app
-    password: <%= ENV["BLOG_APP_DATABASE_PASSWORD"] %>
+    database: blog_app
+    username: postgresql
+    password: asdf
   cache:
     <<: *primary_production
-    database: blog_app_production_cache
+    database: blog_app
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: blog_app_production_queue
+    database: blog_app
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: blog_app_production_cable
+    database: blog_app
     migrations_paths: db/cable_migrate

@@ -1,0 +1,58 @@
+<% content_for :title, "Showing post" %>
+
+<div class="md:w-2/3 w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <h1 class="font-bold text-4xl">Showing post</h1>
+
+  <%= render @post %>
+
+  <%= link_to "Edit this post", edit_post_path(@post), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to posts", posts_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= button_to "Destroy this post", @post, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+</div>
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md mt-6">
+  <h1 class="text-3xl font-bold mb-4 text-gray-800"><%= @post.title %></h1>
+  <p class="text-gray-700 leading-relaxed mb-6"><%= @post.content %></p>
+  <div class="text-sm text-gray-500 mb-6">
+    Posted by: <span class="font-semibold text-gray-700"><%= @post.user.email_address %></span>
+  </div>
+
+  <div class="flex gap-3 mb-8">
+    <% if can? :update, @post %>
+      <%= link_to "Edit Post", edit_post_path(@post), class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition" %>
+    <% end %>
+
+    <% if can? :destroy, @post %>
+      <%= button_to "Delete Post", @post, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition" %>
+    <% end %>
+  </div>
+
+  <hr class="my-6 border-gray-200">
+
+  <h3 class="text-xl font-bold mb-4 text-gray-800">Comments</h3>
+  <div class="space-y-4 mb-8">
+    <% @post.comments.each do |comment| %>
+      <div class="p-4 bg-gray-50 rounded-md border border-gray-200 flex justify-between items-center">
+        <div>
+          <span class="font-bold text-gray-800"><%= comment.user.email_address %>:</span>
+          <p class="text-gray-600"><%= comment.content %></p>
+        </div>
+
+        <% if can? :destroy, comment %>
+          <%= button_to "Delete", post_comment_path(@post, comment), method: :delete, class: "text-sm text-red-600 hover:underline" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if authenticated? %>
+    <h4 class="text-lg font-semibold mb-2">Add a comment:</h4>
+    <%= form_with(model: [@post, @comment], class: "space-y-4") do |form| %>
+      <%= form.textarea :content, rows: 3, class: "w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+      <%= form.submit "Comment", class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition cursor-pointer" %>
+    <% end %>
+  <% end %>
+</div>
