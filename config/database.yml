@@ -5,7 +5,7 @@ default: &default
   # These are the master keys Rails uses to talk to Postgres:
   username: postgres 
   password: asdf
-host: 172.25.16.1 
+  host: localhost
 
 development:
   <<: *default
