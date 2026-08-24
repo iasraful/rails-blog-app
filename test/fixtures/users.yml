@@ -10,6 +10,11 @@ two:
   password_digest: <%= password_digest %>
   role: user
 
+editor:
+  email_address: editor@example.com'
+  password_digest: <%= password_digest %>
+  role: editor
+
 admin:
   email_address: admin@example.com
   password_digest: <%= password_digest %>

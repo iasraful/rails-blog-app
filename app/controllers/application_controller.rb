@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |_exception|
     respond_to do |format|
-      format.html { redirect_back_or_to root_path, alert: "Only Admin can perform this action." }
-      format.json { render json: { error: "Only Admin can perform this action." }, status: :forbidden }
+      format.html { redirect_back_or_to root_path, alert: "You are not authorized to perform this action.", status: :see_other }
+      format.json { render json: { error: "You are not authorized to perform this action." }, status: :forbidden }
     end
   end
 
