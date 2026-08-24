@@ -8,6 +8,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  rescue_from CanCan::AccessDenied do |_exception|
+    respond_to do |format|
+      format.html { redirect_back_or_to root_path, alert: "Only Admin can perform this action." }
+      format.json { render json: { error: "Only Admin can perform this action." }, status: :forbidden }
+    end
+  end
+
   private
 
   def current_user
