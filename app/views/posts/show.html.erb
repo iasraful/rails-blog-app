@@ -35,7 +35,7 @@
     <% @post.comments.each do |comment| %>
       <div class="p-4 bg-gray-50 rounded-md border border-gray-200 flex justify-between items-center">
         <div>
-          <span class="font-bold text-gray-800"><%= comment.user.email_address %>:</span>
+          <span class="font-bold text-gray-800"><%= comment.user&.email_address %>:</span>
           <p class="text-gray-600"><%= comment.content %></p>
         </div>
 
