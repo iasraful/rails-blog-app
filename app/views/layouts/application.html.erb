@@ -19,14 +19,35 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex flex-col">
+  <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <div class="container mx-auto px-5 py-4 flex justify-between items-center">
+        <%= link_to root_path, class: "flex items-center space-x-2" do %>
+          <span class="text-2xl font-black text-blue-600 tracking-tight">Blog<span class="text-gray-800">App</span></span>
+        <% end %>
+
+        <nav class="flex items-center space-x-4">
+          <% if authenticated? %>
+            <div class="flex items-center space-x-3 text-sm">
+              <span class="font-medium text-gray-700"><%= current_user.email_address %></span>
+              <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 capitalize"><%= current_user.role %></span>
+              <%= button_to "Sign out", session_path, method: :delete, class: "rounded-md px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm transition cursor-pointer" %>
+            </div>
+          <% else %>
+            <%= link_to "Sign in", new_session_path, class: "rounded-md px-3.5 py-2 text-gray-700 hover:text-blue-600 font-medium text-sm transition" %>
+            <%= link_to "Sign up", new_user_path, class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition shadow-sm" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container mx-auto my-10 px-5 flex flex-col flex-1">
       <% if notice.present? %>
-        <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-md border border-green-200" id="notice"><%= notice %></p>
+        <div class="py-2.5 px-4 bg-green-50 mb-6 text-gray-700 font-medium text-md border border-gray-200 shadow-sm" id="notice"><%= notice %></div>
       <% end %>
 
       <% if alert.present? %>
-        <p class="py-2 px-3 bg-red-50 mb-5 text-red-600 font-medium rounded-md border border-red-200" id="alert"><%= alert %></p>
+        <div class="py-2.5 px-4 bg-red-50 mb-6 text-red-700 font-medium rounded-md border border-gray-200 shadow-sm" id="alert"><%= alert %></div>
       <% end %>
 
       <%= yield %>
