@@ -67,4 +67,4 @@ end
 
 gem "tailwindcss-rails", "~> 4.6"
 
-gem "cancancan", "~> 3.6"
+gem "cancancan", "~> 3.7"
